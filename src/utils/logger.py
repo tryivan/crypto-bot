@@ -20,8 +20,10 @@ LOG_DIR.mkdir(parents=True, exist_ok=True)
 # Modificadores: bold, italic, dim, bright_
 # =============================================================================
 MODULES = {
+    "ccxt_decorator": {"level": "INFO", "color": "bright_yellow"},
     "settings": {"level": "INFO", "color": "bright_magenta"},
     "exchange_conn": {"level": "DEBUG", "color": "bright_magenta"},
+    "manage_orders": {"level": "DEBUG", "color": "bright_green"},
 }
 
 # =============================================================================

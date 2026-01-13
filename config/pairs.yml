@@ -1,0 +1,5 @@
+pairs:
+  - symbol: BTC/USDT
+    env_file: btc.env
+  - symbol: ETH/USDT
+    env_file: eth.env

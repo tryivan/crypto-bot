@@ -11,7 +11,7 @@ from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from src.utils.logger import get_logger
 
-log_settings = get_logger("bot.settings")
+_log_settings = get_logger("bot.settings")
 
 
 class Settings(BaseSettings):
@@ -28,11 +28,11 @@ class Settings(BaseSettings):
     # =========================================================================
     exchange: str = ""  # Nome da exchange:  binance, bybit, etc.
     market_type: str = "future"  # "future' ou "spot"
+    sandbox: bool = True  # Modo teste (SEMPRE começa em True!)
     """. env tem SANDBOX?  
     ├── SIM → usa o valor do .env
     └── NÃO → usa o default do settings.py (True)
     """
-    sandbox: bool = True  # Modo teste (SEMPRE começa em True!)
 
     # Chaves Testnet
     binance_api_key_test: str = ""
@@ -71,9 +71,9 @@ class Settings(BaseSettings):
     amount: float  # Quantidade a operar
     stop_loss_percent: float  # Stop Loss em %
     take_profit_percent: float  # Take Profit em %
-    max_chase_percent: float
-    entry_offset_percent: float
-    entry_fill_timeout: int = 30
+    chase_percent: float
+    offset_percent: float
+    fill_timeout: int = 30
     max_retries: int = 3  # Tentativas em caso de erro
 
     # =========================================================================
@@ -90,16 +90,16 @@ class Settings(BaseSettings):
         "amount",
         "stop_loss_percent",
         "take_profit_percent",
-        "max_chase_percent",
-        "entry_offset_percent",
-        "entry_fill_timeout",
+        "chase_percent",
+        "offset_percent",
+        "fill_timeout",
         "max_retries",
     )
     @classmethod
     def validate_positive(cls, v: int | float, info) -> int | float:
         """Garante que valores numéricos críticos sejam positivos."""
         if v <= 0:
-            log_settings.error(f"{info.field_name} deve ser maior que 0")
+            _log_settings.error(f"{info.field_name} deve ser maior que 0")
             raise ValueError
         return v
 
@@ -120,7 +120,7 @@ class Settings(BaseSettings):
     def not_empty(cls, v: str, info) -> str:
         """Garante que campos críticos não sejam strings vazias."""
         if not v or not v.strip():
-            log_settings.error(f"{info.field_name} não pode ser vazio")
+            _log_settings.error(f"{info.field_name} não pode ser vazio")
             raise ValueError
         return v.strip()
 
@@ -151,7 +151,7 @@ settings = Settings()
 └─────────────────────────────────────────┘
          │
          ▼
-┌───────────��─────────────────────────────┐
+┌──────────────────────────────────────────┐
 │ 3. Converte tipos                        │
 │    "true" → True (bool)                  │
 │    "10" → 10 (int)                       │

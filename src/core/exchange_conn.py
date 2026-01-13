@@ -1,64 +1,54 @@
-"""
-exchange_conn.py
-
-Este módulo gerencia a conexão com exchanges de criptomoedas usando a biblioteca CCXT.
-
-Explicação linha a linha:
-- import ccxt: Importa a biblioteca CCXT, que fornece uma interface unificada para múltiplas exchanges.
-- from src.core.settings import settings: Importa as configurações globais do bot, como nome da exchange, chaves de API, tipo de mercado e modo sandbox.
-- from src.utils.logger import get_logger: Importa a função auxiliar para criar loggers configurados, permitindo rastreamento detalhado de eventos.
-- _log_exchange = get_logger("bot.exchange_conn"): Cria um logger específico para este módulo, com nome identificador para os logs.
-- class Exchange: Define a classe responsável por gerenciar a conexão com a exchange.
-- def __init__(self): Construtor da classe, inicializa a conexão usando as configurações globais.
-    - _log_exchange.info(...): Registra no log o início da conexão e o modo (testnet ou real).
-    - exchange_class = getattr(ccxt, settings.exchange): Obtém dinamicamente a classe da exchange a partir do nome configurado.
-    - self.client = exchange_class({...}): Cria uma instância autenticada da exchange, passando chaves, tipo de mercado e opções.
-    - if settings.sandbox: Ativa o modo sandbox/testnet se configurado.
-    - _log_exchange.info(...): Registra sucesso na conexão.
-- def test_connection(self): Método para testar se a conexão está funcionando.
-    - try: Tenta buscar o saldo da conta na exchange.
-    - _log_exchange.info(...): Registra sucesso no teste.
-    - _log_exchange.debug(...): Registra o saldo disponível de USDT.
-    - except Exception as e: Em caso de erro, registra o erro no log.
-- exchange = Exchange(): Cria uma instância global (singleton) da classe Exchange, pronta para uso em outros módulos.
-
-Este design garante:
-- Conexão única e consistente com a exchange.
-- Suporte a múltiplos tipos de mercado e ambiente de testes.
-- Logging detalhado para rastreabilidade e depuração.
-- Facilidade de uso em todo o projeto via importação da instância global.
-"""
-
 import ccxt
+import logging
+from typing import Optional
 
 from src.core.settings import settings
 from src.utils.logger import get_logger
+from src.utils.ccxt_decorators import handle_ccxt_exceptions
 
-log_exchange = get_logger("bot.exchange_conn")
 
+class ExchangeConn:
+    """Gerencia conexão com a exchange usando a biblioteca CCXT.
 
-class Exchange:
-    """Gerencia conexão com a exchange."""
+    Responsabilidades:
+    - Criar e autenticar conexão com a exchange configurada.
+    - Suportar modo sandbox (testnet) e produção.
+    - Testar a conexão automaticamente na inicialização.
+    - Tratar exceções específicas do CCXT para diagnóstico preciso.
+
+    Attributes:
+        exchange (ccxt.Exchange): Instância autenticada da exchange CCXT.
+    """
 
     def __init__(self) -> None:
         """Inicializa conexão com a exchange."""
-        log_exchange.info(f"Conectando à {settings.exchange.upper()}...")
-        log_exchange.info(f"Modo: {'TESTNET' if settings.sandbox else 'REAL'}")
+        self._log_exchange: logging.Logger = get_logger("bot.exchange_conn")
+        self._exchange: Optional[ccxt.Exchange] = None
 
         try:
-            self.exchange_class = getattr(ccxt, settings.exchange)  # ← retorna a CLASSE
+            """Factory dinâmica para multiplas corretoras"""
+            self._exchange_class = getattr(
+                ccxt, settings.exchange
+            )  # ← retorna a CLASSE
         except AttributeError as e:
-            log_exchange.error(
+            self._log_exchange.error(
                 f"Exchange '{settings.exchange}' não encontrada no CCXT: {e}"
             )
             raise
 
-        self.client = self._get_exchange()
-
+    @handle_ccxt_exceptions
     def _create_ccxt_instance(self) -> ccxt.Exchange:
+        """
+        Cria e retorna uma instância autenticada da exchange CCXT, usando as configurações globais.
+        Ativa o modo sandbox se configurado.
+        Returns:
+            ccxt.Exchange: Instância autenticada da exchange.
+        Raises:
+            Exception: Se houver erro na criação da instância.
+        """
         try:
-            exchange: ccxt.Exchange = (
-                self.exchange_class(  # ← cria um OBJETO a partir da classe
+            _exchange: ccxt.Exchange = (
+                self._exchange_class(  # ← cria um OBJETO a partir da classe
                     {
                         "apiKey": settings.api_key,
                         "secret": settings.api_secret,
@@ -67,65 +57,62 @@ class Exchange:
                             "defaultType": settings.market_type,
                             "adjustForTimeDifference": True,
                         },
+                        "recvWindow": 60000,
                     }
                 )
             )
             # Ativa sandbox se necessário
             if settings.sandbox:
-                exchange.enable_demo_trading(True)
+                _exchange.enable_demo_trading(True)
 
-            return exchange
+            return _exchange
 
         except Exception as e:
-            log_exchange.error(f"Erro ao criar instância da exchange: {e}")
+            self._log_exchange.error(f"Erro ao criar instância da exchange: {e}")
             raise
 
-    def _test_connection(self, exchange: ccxt.Exchange) -> bool:
-        """Testa se a conexão está funcionando."""
-        try:
-            balance = exchange.fetch_balance()
-            mode = "TESTNET" if settings.sandbox else "REAL"
-            log_exchange.info(
-                f"Conexão testada com sucesso! [{settings.exchange.upper()}, {settings.market_type} | {mode}]"
-            )
-            log_exchange.debug(f"USDT disponível: {balance['USDT']['free']}")
-            return True
-        except ccxt.PermissionDenied as e:
-            log_exchange.error(
-                f"Permissão negada: verifique as permissões da API - {e}"
-            )
-            return False
-        except ccxt.AuthenticationError as e:
-            log_exchange.error(
-                f"Erro de autenticação: verifique suas chaves de API - {e}"
-            )
-            return False
-        except ccxt.DDoSProtection as e:
-            log_exchange.error(f"Proteção DDoS ativada: aguarde alguns minutos - {e}")
-            return False
-        except ccxt.RateLimitExceeded as e:
-            log_exchange.error(f"Limite de requisições excedido: aguarde - {e}")
-            return False
-        except ccxt.RequestTimeout as e:
-            log_exchange.error(f"Timeout na requisição: verifique sua conexão - {e}")
-            return False
-        except ccxt.ExchangeNotAvailable as e:
-            log_exchange.error(f"Exchange indisponível ou em manutenção - {e}")
-            return False
-        except ccxt.NetworkError as e:
-            log_exchange.error(f"Erro de rede: verifique sua conexão - {e}")
-            return False
-        except ccxt.ExchangeError as e:
-            log_exchange.error(f"Erro da exchange: {e}")
-            return False
-        except Exception as e:
-            log_exchange.error(f"Erro inesperado na conexão: {e}")
-            return False
+    @handle_ccxt_exceptions
+    def _test_connection(self, _exchange: ccxt.Exchange) -> bool:
+        """Testa se a conexão com a exchange está funcionando.
 
-    def _get_exchange(self) -> ccxt.Exchange:
-        exchange = self._create_ccxt_instance()
-        if not self._test_connection(exchange):
-            raise ConnectionError(
-                "Falha ao conectar com a exchange - verifique os logs."
-            )
-        return exchange
+        Realiza uma requisição real (fetch_balance) para validar autenticação
+        e conectividade. Trata exceções específicas do CCXT para fornecer
+        mensagens de erro detalhadas.
+
+        Args:
+            exchange (ccxt.Exchange): Instância da exchange a ser testada.
+
+        Returns:
+            bool: True se a conexão foi bem-sucedida, False caso contrário.
+        """
+
+        _balance = _exchange.fetch_balance()
+        _mode = "TESTNET" if settings.sandbox else "REAL"
+        self._log_exchange.info(
+            f"Conexão testada com sucesso! [ {settings.exchange.upper()}, {settings.market_type} | {_mode} ]"
+        )
+        self._log_exchange.debug(f"USDT disponível: {_balance['USDT']['free']}")
+        return True
+
+    @property
+    def exchange(self) -> ccxt.Exchange:
+        """Retorna a instância da exchange, criando-a se necessário.
+
+        Implementa padrão de cache: a conexão é criada apenas uma vez
+        e reutilizada em chamadas subsequentes.
+
+        Returns:
+            ccxt.Exchange: Instância autenticada e testada da exchange.
+        Raises:
+            ConnectionError: Se a conexão não puder ser estabelecida.
+        """
+        if self._exchange is None:
+            self._exchange = self._create_ccxt_instance()
+            if not self._test_connection(self._exchange):
+                self._exchange = None
+                raise ConnectionError(
+                    "Falha ao conectar com a exchange - verifique os logs."
+                )
+        else:
+            self._log_exchange.info(f"CACHE OBJECT: {type(self._exchange)}")
+        return self._exchange

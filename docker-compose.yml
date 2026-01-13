@@ -1,0 +1,16 @@
+services:
+  bot-btc:
+    build: .
+    env_file: ./config/btc.env
+    restart: unless-stopped
+    volumes:
+    - logs-btc:/app/logs
+  bot-eth:
+    build: .
+    env_file: ./config/eth.env
+    restart: unless-stopped
+    volumes:
+    - logs-eth:/app/logs
+volumes:
+  logs-btc: null
+  logs-eth: null

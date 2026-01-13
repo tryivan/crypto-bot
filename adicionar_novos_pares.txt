@@ -1,0 +1,55 @@
+===============================================
+PROCEDIMENTO PARA ADICIONAR NOVOS PARES
+===============================================
+
+1. Criar arquivo de configuração do par
+   - Local: config/
+   - Nome: <par>. env (ex: sol.env, xrp.env)
+   - Conteúdo mínimo: 
+     SYMBOL=<PAR>/USDT
+     EXCHANGE=binance
+
+   Exemplo para SOL: 
+     SYMBOL=SOL/USDT
+     EXCHANGE=binance
+
+2. Registrar o par no pairs.yml
+   - Abrir:  config/pairs.yml
+   - Adicionar no final: 
+     - symbol: <PAR>/USDT
+       env_file: <par>.env
+
+   Exemplo: 
+     - symbol: SOL/USDT
+       env_file: sol.env
+
+3. Gerar o docker-compose. yml
+   - Executar no terminal: 
+     python scripts/generate_compose.py
+
+4. Subir os containers
+   - Executar no terminal:
+     docker compose up -d
+
+===============================================
+EXEMPLO COMPLETO:  Adicionando SOL/USDT
+===============================================
+
+Passo 1: Criar config/sol.env
+   SYMBOL=SOL/USDT
+   EXCHANGE=binance
+
+Passo 2: Editar config/pairs.yml
+   pairs:
+     - symbol: BTC/USDT
+       env_file: btc.env
+     - symbol: ETH/USDT
+       env_file: eth.env
+     - symbol: SOL/USDT
+       env_file: sol.env
+
+Passo 3: Rodar o script
+   python scripts/generate_compose.py
+
+Passo 4: Subir containers
+   docker compose up -d
