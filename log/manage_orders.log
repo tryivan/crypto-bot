@@ -1,3 +1,37 @@
 2026-01-13 09:20:55,100|bot.manage_orders|INFO|Alavancagem configurada:  1x
 2026-01-13 09:31:54,518|bot.manage_orders|INFO|Alavancagem configurada:  1x
 2026-01-13 10:16:44,336|bot.manage_orders|INFO|Alavancagem configurada:  1x
+2026-01-14 08:05:30,302|bot.manage_orders|INFO|Alavancagem configurada:  1x
+2026-01-14 08:05:59,355|bot.manage_orders|ERROR|Erro ao criar ordem (tentativa 1): binance {"code":-2019,"msg":"Margin is insufficient."}
+2026-01-14 08:05:59,897|bot.manage_orders|ERROR|Erro ao criar ordem (tentativa 2): binance {"code":-2019,"msg":"Margin is insufficient."}
+2026-01-14 08:06:00,438|bot.manage_orders|ERROR|Erro ao criar ordem (tentativa 3): binance {"code":-2019,"msg":"Margin is insufficient."}
+2026-01-14 08:06:00,439|bot.manage_orders|WARNING|Falha ao criar a ordem principal.
+2026-01-14 08:06:57,039|bot.manage_orders|INFO|Alavancagem configurada:  1x
+2026-01-14 08:11:03,708|bot.manage_orders|INFO|Alavancagem configurada:  1x
+2026-01-14 08:11:35,178|bot.manage_orders|INFO|Ordem 1601415962 não executada.  Cancelando e tentando novamente...
+2026-01-14 08:11:35,468|bot.manage_orders|WARNING|Ordem criada mas não preenchida. [Id: 1601415962] [Status: open]
+2026-01-14 09:04:30,402|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-14 09:05:01,922|bot.manage_orders|INFO|Ordem preenchida! [Lado: buy] [Preço: 143.65] [Id: 1601535149]
+2026-01-14 09:05:02,233|bot.manage_orders|INFO|Stop Loss criado: 142.21
+2026-01-14 09:05:02,555|bot.manage_orders|INFO|Take Profit criado: 146.52
+2026-01-14 09:06:53,320|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-14 09:07:24,869|bot.manage_orders|INFO|Ordem preenchida! [Lado: buy] [Preço: 143.83] [Id: 1601540174]
+2026-01-14 09:07:25,183|bot.manage_orders|INFO|Stop Loss criado: 142.39
+2026-01-14 09:07:25,499|bot.manage_orders|INFO|Take Profit criado: 146.71
+2026-01-14 09:08:07,656|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-14 09:08:14,149|bot.manage_orders|INFO|Ordem 1601543311 não executada. Cancelando e tentando novamente...
+2026-01-14 09:23:06,933|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-14 09:23:11,420|bot.manage_orders|INFO|Ordem 1601576731 não executada. Cancelando e tentando novamente...
+2026-01-14 09:23:15,596|bot.manage_orders|INFO|Ordem 1601576832 não executada. Cancelando e tentando novamente...
+2026-01-14 09:23:19,773|bot.manage_orders|INFO|Ordem 1601576927 não executada. Cancelando e tentando novamente...
+2026-01-14 09:23:20,067|bot.manage_orders|WARNING|Ordem criada mas não preenchida. [Id: 1601576927] [Status: open]
+2026-01-14 09:24:35,280|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-14 09:24:46,809|bot.manage_orders|INFO|Ordem 1601580333 não executada. Cancelando e tentando novamente...
+2026-01-14 09:24:58,012|bot.manage_orders|INFO|Ordem 1601580670 não executada. Cancelando e tentando novamente...
+2026-01-14 09:25:09,215|bot.manage_orders|INFO|Ordem 1601580905 não executada. Cancelando e tentando novamente...
+2026-01-14 09:25:09,516|bot.manage_orders|WARNING|Ordem criada mas não preenchida. [Id: 1601580905] [Status: open]
+2026-01-14 09:34:48,052|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-14 09:35:19,571|bot.manage_orders|INFO|Ordem 1601602750 não executada. Cancelando e tentando novamente...
+2026-01-14 09:35:50,774|bot.manage_orders|INFO|Ordem 1601603428 não executada. Cancelando e tentando novamente...
+2026-01-14 09:36:21,978|bot.manage_orders|INFO|Ordem 1601604963 não executada. Cancelando e tentando novamente...
+2026-01-14 09:36:22,286|bot.manage_orders|WARNING|Ordem criada mas não preenchida. [Id: 1601604963] [Status: open]

@@ -79,8 +79,19 @@ class Settings(BaseSettings):
     # =========================================================================
     # SISTEMA (com defaults)
     # =========================================================================
-    timezone: str = "America/Sao_Paulo"
+    market_timezone: str = "America/Sao_Paulo"
     log_level: str = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+    # =========================================================================
+    # EXECUTION SCHEDULE
+    # =========================================================================
+    market_open_day: int
+    market_open_hour: int
+    market_open_minute: int
+
+    market_close_day: int
+    market_close_hour: int
+    market_close_minute: int
 
     # =========================================================================
     # VALIDAÇÕES: Int, Float
@@ -94,6 +105,10 @@ class Settings(BaseSettings):
         "offset_percent",
         "fill_timeout",
         "max_retries",
+        "market_open_day",
+        "market_open_hour",
+        "market_close_day",
+        "market_close_hour",
     )
     @classmethod
     def validate_positive(cls, v: int | float, info) -> int | float:
@@ -107,14 +122,7 @@ class Settings(BaseSettings):
     # VALIDAÇÕES: Strings
     # =========================================================================
     @field_validator(
-        "exchange",
-        "market_type",
-        "binance_api_key_test",
-        "binance_api_secret_test",
-        "binance_api_key",
-        "binance_api_secret",
-        "symbol",
-        "timeframe",
+        "exchange", "market_type", "binance_api_key_test", "binance_api_secret_test", "binance_api_key", "binance_api_secret", "symbol", "timeframe"
     )
     @classmethod
     def not_empty(cls, v: str, info) -> str:
