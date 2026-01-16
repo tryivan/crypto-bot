@@ -79,7 +79,7 @@ class Settings(BaseSettings):
     # =========================================================================
     # SISTEMA (com defaults)
     # =========================================================================
-    market_timezone: str = "America/Sao_Paulo"
+    timezone: str = "America/Sao_Paulo"
     log_level: str = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
 
     # =========================================================================

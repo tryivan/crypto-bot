@@ -6,6 +6,7 @@ configurações de horário definidas no . env
 """
 
 from datetime import datetime, time, timedelta
+from src.core.settings import settings
 from zoneinfo import ZoneInfo
 from enum import Enum
 
@@ -40,14 +41,14 @@ class MarketHoursChecker:
             # entrar em standby
     """
 
-    def __init__(self, timezone: str, open_day: int, open_hour: int, open_minute: int, close_day: int, close_hour: int, close_minute: int):
-        self.tz = ZoneInfo(timezone)
-        self.open_day = open_day
-        self.open_hour = open_hour
-        self.open_minute = open_minute
-        self.close_day = close_day
-        self.close_hour = close_hour
-        self.close_minute = close_minute
+    def __init__(self):
+        self.tz = ZoneInfo(settings.timezone)
+        self.open_day = settings.market_open_day
+        self.open_hour = settings.market_open_hour
+        self.open_minute = settings.market_open_minute
+        self.close_day = settings.market_close_day
+        self.close_hour = settings.market_close_hour
+        self.close_minute = settings.market_close_minute
 
     def get_status(self) -> MarketStatus:
         """

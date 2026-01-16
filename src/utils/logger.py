@@ -24,6 +24,7 @@ MODULES = {
     "settings": {"level": "INFO", "color": "bright_magenta"},
     "exchange_conn": {"level": "DEBUG", "color": "bright_magenta"},
     "manage_orders": {"level": "DEBUG", "color": "bright_green"},
+    "state_chief": {"level": "DEBUG", "color": "bright_cyan"},
 }
 
 # =============================================================================
@@ -32,9 +33,7 @@ MODULES = {
 LOGGING_CONFIG: dict[str, Any] = {
     "version": 1,
     "disable_existing_loggers": False,
-    "formatters": {
-        "file": {"format": "%(asctime)s|%(name)s|%(levelname)s|%(message)s"}
-    },
+    "formatters": {"file": {"format": "%(asctime)s|%(name)s|%(levelname)s|%(message)s"}},
     "handlers": {},  # Será preenchido dinamicamente no loop abaixo
     "loggers": {},
 }
@@ -50,9 +49,7 @@ for module, props in MODULES.items():
     module_log_file = LOG_DIR / f"{module}.log"
 
     # Formatter console com cor específica
-    LOGGING_CONFIG["formatters"][f"console_{module}"] = {
-        "format": f"[{color}][{module.upper()}][/{color}] %(message)s"
-    }
+    LOGGING_CONFIG["formatters"][f"console_{module}"] = {"format": f"[{color}][{module.upper()}][/{color}] %(message)s"}
 
     # Handler de arquivo específico para o módulo
     LOGGING_CONFIG["handlers"][f"file_{module}"] = {
@@ -79,11 +76,7 @@ for module, props in MODULES.items():
     }
 
     # Logger do módulo usa:  console próprio + arquivo próprio
-    LOGGING_CONFIG["loggers"][f"bot.{module}"] = {
-        "handlers": [f"console_{module}", f"file_{module}"],
-        "level": level,
-        "propagate": False,
-    }
+    LOGGING_CONFIG["loggers"][f"bot.{module}"] = {"handlers": [f"console_{module}", f"file_{module}"], "level": level, "propagate": False}
 
 # =============================================================================
 # CONFIGURAÇÃO DE BIBLIOTECAS EXTERNAS
