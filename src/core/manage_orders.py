@@ -82,6 +82,9 @@ class ManageOrders:
 
     def _calculate_entry_price(self, side: str, current_price: float, offset_percent: float) -> float:
         """Calcula o preço de entrada com offset aplicado."""
+        if current_price <= 0:
+            raise ValueError(f"current_price deve ser positivo, recebido: {current_price}")
+
         offset = offset_percent / 100
 
         if side == self.LONG_SIDE:
@@ -94,6 +97,9 @@ class ManageOrders:
 
     def _calculate_protection_price(self, side: str, entry_price: float, percent: float, is_stop_loss: bool) -> float:
         """Calcula o preço de Stop Loss ou Take Profit."""
+        if entry_price <= 0:
+            raise ValueError(f"entry_price deve ser positivo, recebido: {entry_price}")
+
         is_long = side == self.LONG_SIDE
         should_subtract = (is_long and is_stop_loss) or (not is_long and not is_stop_loss)
 
@@ -366,17 +372,20 @@ class ManageOrders:
         max_retries = self._max_retries if self._max_retries > 0 else 1
 
         initial_price = self._get_current_price()
-        if not initial_price:
+        if not initial_price or initial_price <= 0:
+            self._log_order.error("Preço inicial inválido ou zero. Abortando ordem.")
             return None
 
         best_attempt: Optional[Dict] = None
 
         for attempt in range(1, max_retries + 1):
             current_price = self._get_current_price()
-            if not current_price:
+            if not current_price or current_price <= 0:
+                self._log_order.warning("Preço atual inválido. Abortando tentativa.")
                 break
 
             price_deviation = abs((current_price - initial_price) / initial_price) * 100
+
             if price_deviation > self._max_chase_percent:
                 self._log_order.warning(f"Preço se moveu {price_deviation:.3f}% desde o início. Abortando.")
                 break
@@ -401,6 +410,22 @@ class ManageOrders:
             self._exchange.cancel_order(order["id"], self._symbol)
 
         return best_attempt
+
+    def _recreate_missing_protection(self, side: str, entry_price: float, has_sl: bool, has_tp: bool) -> None:
+        """Recria ordens de proteção faltantes."""
+        typed_side = cast(Literal["buy", "sell"], side)
+
+        if not has_sl:
+            sl_order = self._create_protection_order(typed_side, entry_price, "stop_market", self._percent_sl, is_stop_loss=True, amount=self._amount)
+            if not sl_order:
+                self._log_order.warning("Falha ao recriar Stop Loss.")
+
+        if not has_tp:
+            tp_order = self._create_protection_order(
+                typed_side, entry_price, "take_profit_market", self._percent_tp, is_stop_loss=False, amount=self._amount
+            )
+            if not tp_order:
+                self._log_order.warning("Falha ao recriar Take Profit.")
 
     # -------------------------------------------------------------------------
     # Interface pública
@@ -518,19 +543,3 @@ class ManageOrders:
         self._recreate_missing_protection(side, entry_price, has_sl, has_tp)
 
         return True
-
-    def _recreate_missing_protection(self, side: str, entry_price: float, has_sl: bool, has_tp: bool) -> None:
-        """Recria ordens de proteção faltantes."""
-        typed_side = cast(Literal["buy", "sell"], side)
-
-        if not has_sl:
-            sl_order = self._create_protection_order(typed_side, entry_price, "stop_market", self._percent_sl, is_stop_loss=True, amount=self._amount)
-            if not sl_order:
-                self._log_order.warning("Falha ao recriar Stop Loss.")
-
-        if not has_tp:
-            tp_order = self._create_protection_order(
-                typed_side, entry_price, "take_profit_market", self._percent_tp, is_stop_loss=False, amount=self._amount
-            )
-            if not tp_order:
-                self._log_order.warning("Falha ao recriar Take Profit.")

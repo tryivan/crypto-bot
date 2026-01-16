@@ -94,6 +94,18 @@ class Settings(BaseSettings):
     market_close_minute: int
 
     # =========================================================================
+    # VALIDAÇÕES: Não negativos
+    # =========================================================================
+    @field_validator("market_open_minute", "market_close_minute")
+    @classmethod
+    def validate_non_negative(cls, v: int, info) -> int:
+        """Garante que minutos sejam >= 0."""
+        if v < 0:
+            _log_settings.error(f"{info.field_name} não pode ser negativo")
+            raise ValueError
+        return v
+
+    # =========================================================================
     # VALIDAÇÕES: Int, Float
     # =========================================================================
     @field_validator(

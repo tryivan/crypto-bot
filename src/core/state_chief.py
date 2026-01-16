@@ -31,13 +31,9 @@ class StateChief:
 
         Args:
             exchange: Instância CCXT autenticada.
-            symbol: Par de trading (ex: 'BTCUSDT').
-            timeframe: Timeframe do candle (ex: '1m', '4h').
-            pair_config: Configurações do par.
-            strategy_config: Configurações dos indicadores.
-            dataset_manager: Gerenciador de dados.
-            indicator_pipeline: Pipeline de indicadores.
-            strategy: Estratégia de sinais.
+            manage_orders: Intância ManageOrders
+            hours_checker: Intância MarketHoursChecker
+
         """
         self._log_state_chief = get_logger("bot.state_chief")
 
@@ -85,7 +81,7 @@ class StateChief:
                     self._handle_error()
 
                 elif self._state == StateChief.BotState.STANDBY:
-                    self._log_state_chief.info("Estado IDLE — aguardando próximo ciclo.")
+                    self._log_state_chief.info("Estado IDLE — aguardando próxima janela operacional...")
                     time.sleep(self._next_window)
 
             except KeyboardInterrupt:
@@ -103,9 +99,9 @@ class StateChief:
         """Inicializa ManageOrders e normaliza posição."""
         try:
             # Verifica janela operacional
-            is_market_open = self._hours_checker.get_status()
+            is_market_open = self._hours_checker.is_market_open()
             if not is_market_open:
-                self._log_state_chief.info("Fora da janela operacional")
+                self._log_state_chief.info("Horário fora da janela operacional.")
                 self._next_window = self._hours_checker.seconds_until_next_open()
                 self._state = StateChief.BotState.STANDBY
 

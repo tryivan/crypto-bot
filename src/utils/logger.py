@@ -2,12 +2,21 @@ import logging
 from logging.config import dictConfig
 from pathlib import Path
 from typing import Any
+import sys
 
 # =============================================================================
 # CONFIGURAÇÃO DE DIRETÓRIOS E ARQUIVOS DE LOG
 # =============================================================================
 LOG_DIR = Path(__file__).resolve().parents[2] / "log"
-LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+try:
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+except PermissionError:
+    print(f"[ERRO] Sem permissão para criar diretório de logs: {LOG_DIR}", file=sys.stderr)
+    sys.exit(1)
+except OSError as e:
+    print(f"[ERRO] Falha ao criar diretório de logs: {e}", file=sys.stderr)
+    sys.exit(1)
 
 # CCXT_LOG_FILE = LOG_DIR / "ccxt.log"  # Logs do ccxt (biblioteca externa)
 
