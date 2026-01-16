@@ -81,8 +81,7 @@ class StateChief:
                     self._handle_error()
 
                 elif self._state == StateChief.BotState.STANDBY:
-                    self._log_state_chief.info("Estado IDLE — aguardando próxima janela operacional...")
-                    time.sleep(self._next_window)
+                    self._handle_standby()
 
             except KeyboardInterrupt:
                 self._log_state_chief.info("Bot interrompido manualmente. Encerrando...")
@@ -101,9 +100,8 @@ class StateChief:
             # Verifica janela operacional
             is_market_open = self._hours_checker.is_market_open()
             if not is_market_open:
-                self._log_state_chief.info("Horário fora da janela operacional.")
-                self._next_window = self._hours_checker.seconds_until_next_open()
                 self._state = StateChief.BotState.STANDBY
+                return
 
             # Normaliza posição existente
             is_trading = self._manage_orders.normalize_position_state()
@@ -262,3 +260,22 @@ class StateChief:
         except Exception as e:
             self._log_state_chief.critical(f"Erro na recuperação: {e}", exc_info=True)
             self._retry_count += 1
+
+    def _handle_standby(self):
+        """Aguarda a próxima janela operacional abrir"""
+        self._log_state_chief.info("Horário fora da janela operacional.")
+        self._next_window = self._hours_checker.seconds_until_next_open()
+
+        # Contagem regressiva com horas e minutos
+        remaining_seconds = self._next_window
+        while remaining_seconds > 0:
+            hours, remainder = divmod(remaining_seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            self._log_state_chief.info(f"Próxima janela em: {int(hours):02d}h {int(minutes):02d}m {int(seconds):02d}s")
+            # Intervalo de atualização: 60s ou o tempo restante (o que for menor)
+            sleep_interval = min(60 * 60, remaining_seconds)
+            time.sleep(sleep_interval)
+            remaining_seconds -= sleep_interval
+
+        self._log_state_chief.info("Janela operacional aberta. Voltando para INITIALIZING.")
+        self._state = StateChief.BotState.INITIALIZING

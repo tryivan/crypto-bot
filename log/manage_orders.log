@@ -35,3 +35,86 @@
 2026-01-14 09:35:50,774|bot.manage_orders|INFO|Ordem 1601603428 não executada. Cancelando e tentando novamente...
 2026-01-14 09:36:21,978|bot.manage_orders|INFO|Ordem 1601604963 não executada. Cancelando e tentando novamente...
 2026-01-14 09:36:22,286|bot.manage_orders|WARNING|Ordem criada mas não preenchida. [Id: 1601604963] [Status: open]
+2026-01-16 11:34:08,957|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-16 11:34:09,522|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 11:34:09,802|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 11:34:10,075|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 11:34:10,348|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 11:34:10,619|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 11:34:10,892|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 11:34:11,163|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 11:34:11,435|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 11:34:11,707|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 11:34:11,975|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 11:34:14,693|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 11:34:34,972|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 11:34:35,241|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 11:34:35,515|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 11:34:35,780|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 11:34:36,053|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 11:34:36,319|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 11:34:36,588|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 11:34:36,857|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 11:34:37,122|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 11:34:37,392|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 11:34:40,089|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 18:01:23,734|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-16 18:01:24,497|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 18:01:24,859|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 18:01:25,215|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 18:01:25,568|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 18:01:25,928|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 18:01:26,282|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 18:01:26,636|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 18:01:26,987|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 18:01:27,344|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 18:01:27,704|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 18:01:31,288|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 18:01:51,656|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 18:01:52,021|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 18:01:52,378|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 18:01:52,735|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 18:01:53,090|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 18:01:53,451|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 18:01:53,806|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 18:01:54,166|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 18:01:54,526|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 18:01:54,886|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 18:01:59,070|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 18:02:19,431|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 18:02:19,794|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 18:02:20,148|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 18:02:20,511|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 18:02:20,864|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 18:02:21,221|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 18:02:21,578|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 18:02:21,944|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 18:02:22,299|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 18:02:22,660|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 18:02:26,841|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 18:02:47,200|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 18:02:47,555|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 18:02:47,914|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 18:02:48,273|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 18:02:48,628|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 18:02:48,990|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 18:02:49,347|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 18:02:49,706|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 18:02:50,060|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 18:02:50,420|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 18:02:54,600|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 18:03:14,960|bot.manage_orders|INFO|Nenhuma posição ativa em SOLUSDT. Cancelando ordens pendentes.
+2026-01-16 18:03:15,316|bot.manage_orders|INFO|cancel_all_orders executado: default
+2026-01-16 18:03:15,677|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP'}
+2026-01-16 18:03:16,032|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT'}
+2026-01-16 18:03:16,391|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'STOP_MARKET'}
+2026-01-16 18:03:16,753|bot.manage_orders|INFO|cancel_all_orders executado: {'type': 'TAKE_PROFIT_MARKET'}
+2026-01-16 18:03:17,113|bot.manage_orders|INFO|cancel_all_orders executado: {'stop': True}
+2026-01-16 18:03:18,071|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'STOP'}
+2026-01-16 18:03:19,024|bot.manage_orders|INFO|cancel_all_orders executado: {'orderType': 'TAKE_PROFIT'}
+2026-01-16 18:03:19,387|bot.manage_orders|INFO|cancel_all_orders executado: {'reduceOnly': True, 'stop': True}
+2026-01-16 18:03:23,543|bot.manage_orders|INFO|Nenhuma ordem pendente para cancelar.
+2026-01-16 18:04:50,749|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-16 19:11:13,095|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-16 19:14:46,123|bot.manage_orders|INFO|Alavancagem configurada: 1x
+2026-01-16 19:22:23,929|bot.manage_orders|INFO|Alavancagem configurada: 1x

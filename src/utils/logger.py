@@ -29,11 +29,11 @@ except OSError as e:
 # Modificadores: bold, italic, dim, bright_
 # =============================================================================
 MODULES = {
-    "ccxt_decorator": {"level": "INFO", "color": "bright_yellow"},
+    "ccxt_decorator": {"level": "INFO", "color": "bright_cyan"},
     "settings": {"level": "INFO", "color": "bright_magenta"},
     "exchange_conn": {"level": "DEBUG", "color": "bright_magenta"},
     "manage_orders": {"level": "DEBUG", "color": "bright_green"},
-    "state_chief": {"level": "DEBUG", "color": "bright_cyan"},
+    "state_chief": {"level": "DEBUG", "color": "bright_yellow"},
 }
 
 # =============================================================================

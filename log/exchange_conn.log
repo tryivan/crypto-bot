@@ -144,3 +144,15 @@
 2026-01-14 13:57:23,401|bot.exchange_conn|DEBUG|USDT disponível: 0.0
 2026-01-14 13:58:00,447|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
 2026-01-14 13:58:00,448|bot.exchange_conn|DEBUG|USDT disponível: 0.0
+2026-01-16 11:34:08,657|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
+2026-01-16 11:34:08,682|bot.exchange_conn|DEBUG|USDT disponível: 0.0
+2026-01-16 18:01:23,348|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
+2026-01-16 18:01:23,372|bot.exchange_conn|DEBUG|USDT disponível: 0.0
+2026-01-16 18:04:50,476|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
+2026-01-16 18:04:50,478|bot.exchange_conn|DEBUG|USDT disponível: 0.0
+2026-01-16 19:11:12,738|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
+2026-01-16 19:11:12,739|bot.exchange_conn|DEBUG|USDT disponível: 0.0
+2026-01-16 19:14:45,851|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
+2026-01-16 19:14:45,853|bot.exchange_conn|DEBUG|USDT disponível: 0.0
+2026-01-16 19:22:23,652|bot.exchange_conn|INFO|Conexão testada com sucesso! [ BINANCE, future | REAL ]
+2026-01-16 19:22:23,654|bot.exchange_conn|DEBUG|USDT disponível: 0.0
